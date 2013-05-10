@@ -32,28 +32,28 @@ the create descriptions.
 
 
 CREATING FUNCTIONS
-==================
+------------------
 
-MATH_ADD | MATH_SUBTRACT | MATH_MULTIPLY | MATH_DIVIDE
----------------------------------------------------------------
-MathFunction
-MathFunction(
 	MATH_ADD | MATH_SUBTRACT | MATH_MULTIPLY | MATH_DIVIDE
-	MathFunction* lhs,          /* Left hand function */
-	MathFunction* rhs);         /* Right hand function */
+	---------------------------------------------------------------
+	MathFunction
+	MathFunction(
+		MATH_ADD | MATH_SUBTRACT | MATH_MULTIPLY | MATH_DIVIDE
+		MathFunction* lhs,          /* Left hand function */
+		MathFunction* rhs);         /* Right hand function */
 
-MathFunction
-MathFunction(
-	MATH_ADD | MATH_SUBTRACT | MATH_MULTIPLY | MATH_DIVIDE
-	double leftConstant,         /* Left hand value */
-	MathFunction* rhs);          /* Right hand function */
+	MathFunction
+	MathFunction(
+		MATH_ADD | MATH_SUBTRACT | MATH_MULTIPLY | MATH_DIVIDE
+		double leftConstant,         /* Left hand value */
+		MathFunction* rhs);          /* Right hand function */
 
 
-MathFunction
-MathFunction(
-	MATH_ADD | MATH_SUBTRACT | MATH_MULTIPLY | MATH_DIVIDE
-	MathFunction* lhs,           /* Left hand function */
-	double rightConstant);       /* Right hand value */
+	MathFunction
+	MathFunction(
+		MATH_ADD | MATH_SUBTRACT | MATH_MULTIPLY | MATH_DIVIDE
+		MathFunction* lhs,           /* Left hand function */
+		double rightConstant);       /* Right hand value */
 
 
 	Examples:
@@ -76,27 +76,27 @@ MathFunction(
 
 
 
-MATH_POWER
----------------------------------------------------------------
-MathFunction
-MathFunction(
-	MATH_POWER, 
-	MathFunction* baseFunction,          /* Base function */
-	MathFunction* expFunction);          /* Exponent function */
+	MATH_POWER
+	---------------------------------------------------------------
+	MathFunction
+	MathFunction(
+		MATH_POWER, 
+		MathFunction* baseFunction,          /* Base function */
+		MathFunction* expFunction);          /* Exponent function */
 
 
-MathFunction
-MathFunction(
-	MATH_POWER, 
-	double baseValue,                    /* Base value */
-	MathFunction* expFunction);          /* Exponent function */
+	MathFunction
+	MathFunction(
+		MATH_POWER, 
+		double baseValue,                    /* Base value */
+		MathFunction* expFunction);          /* Exponent function */
 
 
-MathFunction
-MathFunction(
-	MATH_POWER, 
-	MathFunction* baseFunction,           /* Base function */
-	double expValue);                     /* Exponent value */
+	MathFunction
+	MathFunction(
+		MATH_POWER, 
+		MathFunction* baseFunction,           /* Base function */
+		double expValue);                     /* Exponent value */
 
 
 	Examples:
@@ -111,12 +111,12 @@ MathFunction(
 
 
 
-MATH_POLYNOMIAL
----------------------------------------------------------------
-MathFunction
-MathFunction(
-	MATH_POLYNOMIAL,
-	std::vector<double> coeffs);   /* Vector of coefficents to x^i term */
+	MATH_POLYNOMIAL
+	---------------------------------------------------------------
+	MathFunction
+	MathFunction(
+		MATH_POLYNOMIAL,
+		std::vector<double> coeffs);   /* Vector of coefficents to x^i term */
 
 
 	Examples:
@@ -134,13 +134,13 @@ MathFunction(
 
 
 
-MATH_COMPOSITE
----------------------------------------------------------------
-MathFunction
-MathFunction(
-	MATH_COMPOSITE, 
-	MathFunction* outsideFunction, 
-	MathFunction* insideFunction);
+	MATH_COMPOSITE
+	---------------------------------------------------------------
+	MathFunction
+	MathFunction(
+		MATH_COMPOSITE, 
+		MathFunction* outsideFunction, 
+		MathFunction* insideFunction);
 
 	Examples:
 	---------
@@ -156,12 +156,12 @@ MathFunction(
 
 
 
-MATH_SIN | MATH_COS | MATH_TAN | MATH_COT | MATH_SEC | MATH_CSC
----------------------------------------------------------------
-MathFunction
-MathFunction(
-	MATH_SIN | MATH_COS | MATH_TAN | 
-	MATH_COT | MATH_SEC | MATH_CSC)
+	MATH_SIN | MATH_COS | MATH_TAN | MATH_COT | MATH_SEC | MATH_CSC
+	---------------------------------------------------------------
+	MathFunction
+	MathFunction(
+		MATH_SIN | MATH_COS | MATH_TAN | 
+		MATH_COT | MATH_SEC | MATH_CSC)
 
 	Examples:
 	---------
@@ -178,12 +178,12 @@ MathFunction(
 
 
 
-MATH_LOG
----------------------------------------------------------------
-MathFunction
-MathFunction(
-	MATH_LOG, 
-	double base = 10.0);
+	MATH_LOG
+	---------------------------------------------------------------
+	MathFunction
+	MathFunction(
+		MATH_LOG, 
+		double base = 10.0);
 
 
 	Examples:
@@ -195,10 +195,10 @@ MathFunction(
 
 
 
-MATH_LN
----------------------------------------------------------------
-MathFunction
-MathFunction(MATH_LN);
+	MATH_LN
+	---------------------------------------------------------------
+	MathFunction
+	MathFunction(MATH_LN);
 
 	Examples:
 	---------
@@ -208,33 +208,33 @@ MathFunction(MATH_LN);
 
 
 USING FUNCTIONS
-==================
+---------------
 
 Calculating functional values
 -----------------------------
 
-CalculateY
------------
-Calculate the Y value for a given X for this function.
-param x (input) x input value for this function.
-param y (output) y output value for this function.
-return TMathResult - One of MATH_SUCCESS or MATH_UNDEFINED (such as /0)
+	CalculateY
+	-----------
+	Calculate the Y value for a given X for this function.
+	param x (input) x input value for this function.
+	param y (output) y output value for this function.
+	return TMathResult - One of MATH_SUCCESS or MATH_UNDEFINED (such as /0)
 
-TMathResult
-MathFunction::CalculateY(
-	double x
-	double *y)
+	TMathResult
+	MathFunction::CalculateY(
+		double x
+		double *y)
 
-CalculateY
------------
-Calculate the Y value for a given X for this function.
-pt (input/output) x input value for this function.
-y coordinate is output for this function.
-return TMathResult - One of MATH_SUCCESS or MATH_UNDEFINED (such as /0)
+	CalculateY
+	-----------
+	Calculate the Y value for a given X for this function.
+	pt (input/output) x input value for this function.
+	y coordinate is output for this function.
+	return TMathResult - One of MATH_SUCCESS or MATH_UNDEFINED (such as /0)
 
-TMathResult
-MathFunction::CalculateY(
-	Point *pt);
+	TMathResult
+	MathFunction::CalculateY(
+		Point *pt);
 
 
 Controlling Computational Parameters
@@ -256,49 +256,47 @@ Each of the parameters above can be set globally, or on the individual
 MathFunction object. To set globally, use:
 
 
-~ Global Settings
------------------
-Set global Epsilon value.
-epsilon (input) Value which defines how close is equal.
+Global Settings
+---------------
+	Set global Epsilon value.
+	epsilon (input) Value which defines how close is equal.
 
-static void 
-SetGlobalEpsilon(double epsilon);
-
-
-Set global angle mode value - radians (f)/degrees(t)).
-angelMode (input) Angles are in degrees or radians.
-Use MATH_ANGLES_IN_DEGREES | MATH_ANGLES_IN_RADIANS.
-
-static void 
-SetGlobalAngleMode(bool angleMode);
+	static void 
+	SetGlobalEpsilon(double epsilon);
 
 
-~ MathFunction settings
------------------------
-Set Epsilon value for this object.
-epsilon (input) Value which defines how close is equal.
+	Set global angle mode value - radians (f)/degrees(t)).
+	angelMode (input) Angles are in degrees or radians.
+	Use MATH_ANGLES_IN_DEGREES | MATH_ANGLES_IN_RADIANS.
 
-void 
-MathFunction::SetEpsilon(double epsilon);
-
-
-Set angle mode value for this object - radians (f)/degrees(t)).
-angelMode (input) Angles are in degrees or radians.
-Use MATH_ANGLES_IN_DEGREES | MATH_ANGLES_IN_RADIANS.
-
-void 
-MathFunction::SetGlobalAngleMode(bool angleMode);
+	static void 
+	SetGlobalAngleMode(bool angleMode);
 
 
+MathFunction Object Settings
+----------------------------
+	Set Epsilon value for this object.
+	epsilon (input) Value which defines how close is equal.
+
+	void 
+	MathFunction::SetEpsilon(double epsilon);
+
+
+	Set angle mode value for this object - radians (f)/degrees(t)).
+	angelMode (input) Angles are in degrees or radians.
+	Use MATH_ANGLES_IN_DEGREES | MATH_ANGLES_IN_RADIANS.
+
+	void 
+	MathFunction::SetGlobalAngleMode(bool angleMode);
 
 
 
 
 ---------------------------------------------------------------
 To Do: 
-	- Add () operator to MathFunction class.
-	- Add ddx for derivative to each MathOperation.
-	- Add method for convenience to produce an entire set of points.
-	- Transformations applied to functions.
-	- Make calls more robust with parameter checks.
+- Add () operator to MathFunction class.
+- Add ddx for derivative to each MathOperation.
+- Add method for convenience to produce an entire set of points.
+- Transformations applied to functions.
+- Make calls more robust with parameter checks.
 
