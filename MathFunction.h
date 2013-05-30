@@ -13,8 +13,6 @@
 #include "Point.h"
 #include "MathOperation.h"
 
-class MathFunction;
-
 /**
  * Interface class for a mathematical function.
  * Specific functions will be defined with MathOperation class
@@ -74,6 +72,13 @@ public:
 		std::vector<double> coeffs);
 
 	/**
+	 * Copy Constructor.
+	 * @param function (input) What function is copied.
+	 */
+	MathFunction(
+		MathFunction const &function);
+
+	/**
 	 * Destructor.
 	 */
 	~MathFunction();
@@ -110,6 +115,14 @@ public:
 	virtual void 
 	SetAngleMode(
 		bool angleMode);
+
+	/**
+	 * Assignment operator.
+	 * @param rhs (input) A function from which to assign.
+	 * @return New function.
+	 */
+	MathFunction& 
+	operator=(const MathFunction& rhs);
 
 	/**
 	 * Allow operator to create added functions.
@@ -201,6 +214,15 @@ public:
 	operator^(const double value);
 
 	/**
+	 * Allow operator to create composite functions.
+	 * e.g. MathFunction newFunc = outFunc(inFunc);
+	 * @param inside (input) The inside of the composite.
+	 * @return New function.
+	 */
+	MathFunction 
+	operator()(MathFunction& inside);
+
+	/**
 	 * Interface function to calculate a point for this function.
 	 * @param x (input) x input value for this function.
 	 * @param y (output) y output value for this function.
@@ -225,7 +247,7 @@ public:
 protected:
 
 	/**
-	 * This method serves as a factory for the various math
+	 * This method calls the factory for the various math
 	 * operations. All possible parameters are included to
 	 * provide a single signature.
 	 * @param type (input) Which math operation.
@@ -240,9 +262,19 @@ protected:
 		TOperatorType type,
 		MathFunction *lhs,
 		MathFunction *rhs,
-		double leftConstant,
-		double rightConstant,
+		double *leftConstant,
+		double *rightConstant,
 		std::vector<double> *coefficients);
+
+	/**
+	 * This method calls the factory for the various math
+	 * operations serving as a copy for the math operation.
+	 * @param mathOperation (input)
+	 */
+	MathOperation*
+	CreateMathOperation(
+		MathOperation* mathOperation);
+	
 	
 protected:
 	//----------------------------------

@@ -85,6 +85,8 @@ TrigFunction::CalculateY(
 		else
 			status = MATH_UNDEFINED;
 		break;
+    default:
+        break;
 	}
 
 	if(status == MATH_SUCCESS)

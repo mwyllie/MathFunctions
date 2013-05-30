@@ -35,21 +35,6 @@ SimpleOperator::SimpleOperator(
  * @param oper (input) What operator is used.
  */
 SimpleOperator::SimpleOperator(
-    TOperatorType oper,
-	MathFunction* lhs,
-	double rightConstant)
-{
-	m_Lhs = lhs;
-	m_Rhs = NULL;
-	m_RightConstant = new double(rightConstant);
-	m_LeftConstant = NULL;
-}
-
-/**
- * Constructor.
- * @param oper (input) What operator is used.
- */
-SimpleOperator::SimpleOperator(
 	TOperatorType oper,
 	double leftConstant,
 	MathFunction* rhs)
@@ -58,6 +43,22 @@ SimpleOperator::SimpleOperator(
 	m_LeftConstant = new double(leftConstant);
 	m_Rhs = rhs;
 	m_RightConstant = NULL;
+	m_Operator = oper;
+}
+
+/**
+ * Constructor.
+ * @param oper (input) What operator is used.
+ */
+SimpleOperator::SimpleOperator(
+	TOperatorType oper,
+	MathFunction* lhs,
+	double rightConstant)
+{
+	m_Lhs = lhs;
+	m_LeftConstant = NULL;
+	m_Rhs = NULL;
+	m_RightConstant = new double(rightConstant); 
 	m_Operator = oper;
 }
 
@@ -135,6 +136,9 @@ SimpleOperator::CalculateY(
 		//------------------------------------------------
 		result = pow(left, right);
 		break;
+    default:
+        result = left;
+        break;
 	}
 
 	if(status == MATH_SUCCESS)

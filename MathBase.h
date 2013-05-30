@@ -4,8 +4,8 @@
  * @author Mary Wyllie
  */
 
-#ifndef MathBase_H 
-#define MathBase_H 1
+#ifndef MATHBASE_H 
+#define MATHBASE_H
 
 #include "MathSetting.h"
 #include "MathDefs.h"
@@ -131,6 +131,14 @@ public:
 	MathSetting*
 	GetMathSetting()
 		{return m_MathSetting;};
+
+	/**
+ 	 * Get the math setting.
+	 * @return setting
+ 	 */
+	const bool
+	HasMathSetting()
+		{return m_MathSetting ? true : false;};
 
 	/**
  	 * Clear the math setting.

@@ -4,8 +4,8 @@
  * @author Mary Wyllie
  */
 
-#ifndef CompositeFunction_H
-#define CompositeFunction_H
+#ifndef COMPOSITEFUNCTION_H
+#define COMPOSITEFUNCTION_H
 
 #include "MathFunction.h"
 #include "MathOperation.h"
@@ -50,6 +50,22 @@ public:
 		MathFunction *insideFunction);
 
 	/**
+	 * Get Left hand side function.
+	 * @return MathFunction*
+	 */
+	virtual MathFunction*
+	GetLhs()
+		{return m_Outside;};
+
+	/**
+	 * Get Right hand side function.
+	 * @return MathFunction*
+	 */
+	virtual MathFunction*
+	GetRhs()
+		{return m_Inside;};
+
+	/**
 	 * Get the outside function.
 	 * @return Pointer to MathFunction.
 	 */
@@ -64,6 +80,14 @@ public:
 	MathFunction*
 	GetInsideFunction()
 		{return m_Inside;};
+
+	/**
+	 * Gets the operator type.
+	 * @return Operator type 
+	 */
+	virtual TOperatorClass
+	GetOperatorClass()
+		{return MATH_OPERATOR_BINARY;};
 
 	/**
 	 * Pure virtual function to calculate a point for this fucntion.

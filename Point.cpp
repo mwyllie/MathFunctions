@@ -1,5 +1,5 @@
 /**
- * Title: Point.h
+ * Title: Point.cpp
  * Description: Math object for points.
  * @author Mary Wyllie
  */
@@ -7,6 +7,7 @@
 #include "Point.h"
 #include "MathBase.h"
 #include <math.h>
+#include <ostream>
 
 /**
  * Point class for math computations.
@@ -326,5 +327,17 @@ Point::PrintObject(char* stringToPrintObject)
 		sprintf(buff, "(%f, %f)", GetX(), GetY());
 		MathBase::PrintObject(buff);
 	}
+}
+
+/**
+ * Overload the stream operator for output.
+ * @param output (input/output) The output stream.
+ * @param pt (input) The point to print.
+ */
+std::ostream&
+operator<<(std::ostream& output, const Point& pt)
+{
+	output << std::showpoint << "(" << pt.GetX() << ", " << pt.GetY() << ")";
+	return output;
 }
 

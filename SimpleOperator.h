@@ -4,8 +4,8 @@
  * @author Mary Wyllie
  */
 
-#ifndef SimpleOperator_H
-#define SimpleOperator_H
+#ifndef SIMPLEOPERATOR_H 
+#define SIMPLEOPERATOR_H 
 
 #include "MathFunction.h"
 #include "MathOperation.h"
@@ -30,7 +30,7 @@ public:
 	 * @param oper (input) What operator is used.
 	 */
 	SimpleOperator(
-        TOperatorType oper,
+		TOperatorType oper,
 		MathFunction* lhs,
 		MathFunction* rhs);
 
@@ -39,7 +39,7 @@ public:
 	 * @param oper (input) What operator is used.
 	 */
 	SimpleOperator(
-        TOperatorType oper,
+		TOperatorType oper,
 		double leftConstant,
 		MathFunction* rhs);
 
@@ -48,7 +48,7 @@ public:
 	 * @param oper (input) What operator is used.
 	 */
 	SimpleOperator(
-        TOperatorType oper,
+		TOperatorType oper,
 		MathFunction* lhs,
 		double rightConstant);
 
@@ -57,6 +57,46 @@ public:
 	 */
 	virtual
 	~SimpleOperator();
+
+	/**
+	 * Get Left hand side function.
+	 * @return MathFunction*
+	 */
+	virtual MathFunction*
+	GetLhs()
+		{return m_Lhs;};
+
+	/**
+	 * Get Right hand side function.
+	 * @return MathFunction*
+	 */
+	virtual MathFunction*
+	GetRhs()
+		{return m_Rhs;};
+
+	/**
+	 * Get Left hand side value.
+	 * @return double*
+	 */
+	virtual double*
+	GetLeftConstant()
+		{return m_LeftConstant;};
+
+	/**
+	 * Get Right hand side value.
+	 * @return double*
+	 */
+	virtual double*
+	GetRightConstant()
+		{return m_RightConstant;};
+
+	/**
+	 * Gets the operator type.
+	 * @return Operator type 
+	 */
+	virtual TOperatorClass
+	GetOperatorClass()
+		{return MATH_OPERATOR_BINARY;};
 
 	/**
 	 * Pure virtual function to calculate a point for this fucntion.

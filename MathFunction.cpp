@@ -5,11 +5,8 @@
  */
 
 #include "MathFunction.h"
-#include "SimpleOperator.h"
-#include "Polynomial.h"
-#include "CompositeFunction.h"
-#include "TrigFunction.h"
-#include "LogFunction.h"
+#include "MathOperationFactory.h"
+#include "MathOperation.h"
 
 /**
  * Base class for a mathematical function.
@@ -56,7 +53,7 @@ MathFunction::MathFunction(
 	MathFunction* rhs)
 {
 	m_MathOperation = CreateMathOperation(type, NULL, rhs, 
-		leftConstant, 0, NULL);
+		&leftConstant, 0, NULL);
 }	
 	
 
@@ -70,7 +67,7 @@ MathFunction::MathFunction(
 	double rightConstant)
 {
 	m_MathOperation = CreateMathOperation(type, lhs, NULL, 
-		0, rightConstant, NULL);
+		0, &rightConstant, NULL);
 }	
 
 
@@ -86,6 +83,22 @@ MathFunction::MathFunction(
 		0, 0, &coeffs);
 }
 
+/**
+ * Copy Constructor.
+ * @param rhs (input) What function is copied.
+ */
+MathFunction::MathFunction(
+	const MathFunction& function)
+{
+	m_MathOperation = CreateMathOperation(function.m_MathOperation);
+
+	if(function.m_MathSetting)
+	{
+		MathBase::SetEpsilon( function.GetEpsilon() );
+		MathBase::SetAngleMode( function.GetAngleMode() );
+		m_MathOperation->SetMathSetting(GetMathSetting());
+	}
+}
 
 /**
  * Destructor.
@@ -136,6 +149,29 @@ MathFunction::SetAngleMode(
 	{
 		m_MathOperation->SetMathSetting(GetMathSetting());
 	}
+}
+
+/**
+ * Assignment operator.
+ * @param rhs (input) A function from which to assign.
+ * @return New function.
+ */
+MathFunction& 
+MathFunction::operator=(const MathFunction& rhs)
+{
+	if(this == &rhs)
+	{
+		return (*this);
+	}
+	m_MathOperation = CreateMathOperation(rhs.m_MathOperation);
+
+	if(rhs.m_MathSetting)
+	{
+		MathBase::SetEpsilon( rhs.GetEpsilon() );
+		MathBase::SetAngleMode( rhs.GetAngleMode() );
+		m_MathOperation->SetMathSetting(GetMathSetting());
+	}
+    return (*this);
 }
 
 /**
@@ -268,6 +304,19 @@ MathFunction::operator^(const double value)
 }
 
 /**
+ * Allow operator to create composite functions.
+ * e.g. MathFunction newFunc = outFunc(inFunc);
+ * @param inside (input) The inside of the composite.
+ * @return New function.
+ */
+MathFunction 
+MathFunction::operator()(MathFunction& inside)
+{
+	MathFunction comp(MATH_COMPOSITE, this, &inside);
+return comp;
+}
+
+/**
  * This method serves as a factory for the various math
  * operations. All possible parameters are included to
  * provide a single signature.
@@ -283,48 +332,37 @@ MathFunction::CreateMathOperation(
 	TOperatorType type,
 	MathFunction *lhs,
 	MathFunction *rhs,
-	double leftConstant,
-	double rightConstant,
+	double *leftConstant,
+	double *rightConstant,
 	std::vector<double> *coefficients)
 {
-	MathOperation *result = NULL;
+	MathOperationFactory factory;
+	MathOperation* operation = factory.CreateMathOperation(
+		type,
+		lhs, rhs,
+		leftConstant, rightConstant,
+		coefficients);
+	return operation;
+}
 
-	switch(type)
-	{
-	case MATH_ADD:
-	case MATH_SUBTRACT:
-	case MATH_MULTIPLY:
-	case MATH_DIVIDE:
-	case MATH_POWER:
-		if(lhs && rhs)
-			result = new SimpleOperator(type, lhs, rhs);
-		else if(lhs)
-			result = new SimpleOperator(type, lhs, rightConstant);
-		else if(rhs)
-			result = new SimpleOperator(type, leftConstant, rhs);
-		break;
-	case MATH_POLYNOMIAL:
-		result = new Polynomial(*coefficients);
-		break;
-	case MATH_COMPOSITE:
-		result = new CompositeFunction(lhs, rhs);
-		break;
-	case MATH_SIN:
-	case MATH_COS:
-	case MATH_TAN:
-	case MATH_COT:
-	case MATH_SEC:
-	case MATH_CSC:
-		result = new TrigFunction(type);
-		break;
-
-	case MATH_LOG:
-	case MATH_LN:
-		result = new LogFunction(type, leftConstant);
-		break;
-	}
-	if(result) result->SetOperatorType(type);
-	return result;
+/**
+ * This method calls the factory for the various math
+ * operations serving as a copy for the math operation.
+ * @param mathOperation (input)
+ */
+MathOperation*
+MathFunction::CreateMathOperation(
+	MathOperation* mathOper)
+{
+	MathOperationFactory factory;
+	MathOperation* operation = factory.CreateMathOperation(
+		mathOper->GetOperatorType(),
+		mathOper->GetLhs(), 
+		mathOper->GetRhs(),
+		mathOper->GetLeftConstant(),
+		mathOper->GetRightConstant(),
+		mathOper->GetCoefficients());
+	return operation;
 }
 
 

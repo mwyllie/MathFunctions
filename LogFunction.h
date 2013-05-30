@@ -40,6 +40,22 @@ public:
 	~LogFunction();
 
 	/**
+	 * Gets the operator type.
+	 * @return Operator type 
+	 */
+	virtual TOperatorClass
+	GetOperatorClass()
+		{return MATH_OPERATOR_BINARY;};
+
+	/**
+	 * Get Left hand side value.
+	 * @return double*
+	 */
+	virtual double*
+	GetLeftConstant()
+		{return &m_Base;};
+
+	/**
 	 * Pure virtual function to calculate a point for this fucntion.
 	 * @param x (input) x input value for this function.
 	 * @return Y value corresponding to the x input.

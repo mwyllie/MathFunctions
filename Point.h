@@ -6,7 +6,7 @@
 
 
 #ifndef POINT_H 
-#define POINT_H 1
+#define POINT_H
 
 #include "MathBase.h"
 
@@ -265,6 +265,14 @@ public:
 	void 
 	PrintObject(char* stringToPrintObject = NULL);
 
+	/**
+	 * Overload the stream operator for output.
+	 * @param output (input/output) The output stream.
+	 * @param pt (input) The point to print.
+	 */
+	friend std::ostream&
+	operator<<(std::ostream& output, const Point& pt);
+
 
 protected:
 
@@ -274,5 +282,6 @@ protected:
 	double m_X, m_Y;
 
 };
+
 
 #endif

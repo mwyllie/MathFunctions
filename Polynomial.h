@@ -40,6 +40,14 @@ public:
 	~Polynomial();
 
 	/**
+	 * Gets the operator type.
+	 * @return Operator type 
+	 */
+	virtual TOperatorClass
+	GetOperatorClass()
+		{return MATH_OPERATOR_COEFFICIENTS;};
+
+	/**
 	 * Set the coefficients.
 	 * @param coefficients (input) List of coefficients.
 	 */
@@ -52,9 +60,9 @@ public:
 	 * Get the coefficients.
 	 * @return List of coefficients.
 	 */
-	std::vector<double>
+	virtual std::vector<double>*
 	GetCoefficients()
-		{return m_Coefficients;};
+		{return &m_Coefficients;};
 
 	/**
 	 * Virtual function to calculate a point for this fucntion.
