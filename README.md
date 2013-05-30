@@ -12,7 +12,7 @@ The following functions are available through MathFunction:
 	MATH_DIVIDE           (Also available with "/" operator)
 	MATH_POWER            (Also available with "^" operator)
 	MATH_POLYNOMIAL
-	MATH_COMPOSITE
+	MATH_COMPOSITE        (Also available with "()" operator)
 	MATH_SIN
 	MATH_COS
 	MATH_TAN
@@ -59,17 +59,17 @@ CREATING FUNCTIONS
 	Examples:
 	---------
 	// Create some functions to operate on.
-	MathFunction sinX = MathFunction(MATH_SIN);
-	MathFunction cosX = MathFunction(MATH_COS);
+	MathFunction sinX(MATH_SIN);
+	MathFunction cosX(MATH_COS);
 
 	// Add with a call.
-	MathFunction addTrig = MathFunction(MATH_ADD, &sinX, &cosX);
+	MathFunction addTrig(MATH_ADD, &sinX, &cosX);
 
 	// Subtract with an operator
 	MathFunction subtractTrig = sinX - cosX;
 
 	// Mutiply with a call.
-	MathFunction multTrig = MathFunction(MATH_MULTIPLY, 2, &sinX);
+	MathFunction multTrig(MATH_MULTIPLY, 2, &sinX);
 
 	// Divide with an operator.
 	MathFunction divTrig = sinX / 2;
@@ -102,11 +102,11 @@ CREATING FUNCTIONS
 	Examples:
 	---------
 	// Create some functions to operate on.
-	MathFunction sinX = MathFunction(MATH_SIN);
-	MathFunction cosX = MathFunction(MATH_SIN);
+	MathFunction sinX(MATH_SIN);
+	MathFunction cosX(MATH_SIN);
 
-	MathFunction sinXraisedToCosX = MathFunction(MATH_POWER, &sinX, &cosX);
-	MathFunction twoToSinX = MathFunction(MATH_POWER, 2, &sinX);
+	MathFunction sinXraisedToCosX(MATH_POWER, &sinX, &cosX);
+	MathFunction twoToSinX(MATH_POWER, 2, &sinX);
 	MathFunction sinSquared = sinX^2;
 
 
@@ -126,11 +126,11 @@ CREATING FUNCTIONS
 	coeffs.push_back(1);
 	coeffs.push_back(2);
 	coeffs.push_back(3);
-	MathFunction poly = MathFunction(MATH_POLYNOMIAL, coeffs);
+	MathFunction poly(MATH_POLYNOMIAL, coeffs);
 
 	// Now create a polynomial 3x^2 + 1
 	coeffs[1] = 0;
-	MathFunction poly2 = MathFunction(MATH_POLYNOMIAL, coeffs);
+	MathFunction poly2(MATH_POLYNOMIAL, coeffs);
 
 
 
@@ -148,11 +148,14 @@ CREATING FUNCTIONS
 	std::vector<double> coeffs;
 	coeffs.push_back(MATH_PI_OVER_2);
 	coeffs.push_back(MATH_2PI);
-	MathFunction poly = MathFunction(MATH_POLYNOMIAL, coeffs);
-	MathFunction sin = MathFunction(MATH_SIN)
+	MathFunction poly(MATH_POLYNOMIAL, coeffs);
+	MathFunction sin(MATH_SIN);
+	sin.SetAngleMode(MATH_ANGLES_IN_RADIANS);
 
 	// Now create the composite function sin(2(pi)x - (pi)/2).
-	MathFunction comp = MathFunction(MATH_COMPOSITE, &sin, &poly);
+	MathFunction comp(MATH_COMPOSITE, &sin, &poly);
+	// Or
+	MathFunction comp = sin(poly);
 
 
 
@@ -169,11 +172,11 @@ CREATING FUNCTIONS
 	std::vector<double> coeffs;
 	coeffs.push_back(MATH_PI_OVER_2);
 	coeffs.push_back(MATH_2PI);
-	MathFunction poly = MathFunction(MATH_POLYNOMIAL, coeffs);
-	MathFunction sin = MathFunction(MATH_SIN);
-
+	MathFunction poly(MATH_POLYNOMIAL, coeffs);
+	MathFunction sin(MATH_SIN);
+	
 	// Now create the composite function sin(2(pi)x - (pi)/2).
-	MathFunction comp = MathFunction(MATH_COMPOSITE, &sin, &poly);
+	MathFunction comp(MATH_COMPOSITE, &sin, &poly);
 	comp.SetAngleMode(MATH_ANGLES_IN_RADIANS);
 
 
@@ -189,9 +192,9 @@ CREATING FUNCTIONS
 	Examples:
 	---------
 	// Create a log base 10 of x function.
-	MathFunction log10 = MathFunction(MATH_LOG);
+	MathFunction log10(MATH_LOG);
 	// Create a log base 2 of x function.
-	MathFunction log2 = MathFunction(MATH_LOG, 2.0);
+	MathFunction log2(MATH_LOG, 2.0);
 
 
 
@@ -203,7 +206,7 @@ CREATING FUNCTIONS
 	Examples:
 	---------
 	// Create a ln function.
-	MathFunction ln = MathFunction(MATH_LN);
+	MathFunction ln(MATH_LN);
 
 
 
@@ -294,7 +297,6 @@ MathFunction Object Settings
 
 ---------------------------------------------------------------
 To Do: 
-- Add () operator to MathFunction class.
 - Add ddx for derivative to each MathOperation.
 - Add method for convenience to produce an entire set of points.
 - Transformations applied to functions.
